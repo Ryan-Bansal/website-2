@@ -1,0 +1,50 @@
+---
+title: "Billboard Graphic"
+execute:
+    echo: FALSE
+---
+
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+
+```{r}
+library(tidyverse)
+library(tidyr)
+
+# Load the billboard dataset
+data("billboard", package = "tidyr")
+
+# Prepare the data
+billboard_long <- billboard %>%
+  pivot_longer(cols = starts_with("wk"), names_to = "week", values_to = "rank", values_drop_na = TRUE) %>%
+  mutate(week = as.integer(str_remove(week, "wk")))
+
+# Select a few artists
+top_artists <- c("Usher", "Destiny's Child", "Creed", "Madonna")
+
+# Filter the data
+billboard_filtered <- billboard_long %>%
+  filter(artist %in% top_artists)
+
+```
+
+
+```{r}
+ggplot(billboard_filtered, aes(x = week, y = rank, color = artist)) +
+  geom_line() +
+  scale_y_reverse() +
+  labs(
+    title = "Billboard Chart Performance Over Time",
+    subtitle = "Selected artists from 2000 Billboard data",
+    x = "Week on Chart",
+    y = "Billboard Rank (Lower is Better)",
+    color = "Artist",
+    caption = "Data: tidyr::billboard"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 16))
+
+```

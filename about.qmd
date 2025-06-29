@@ -1,0 +1,8 @@
+---
+title: "About"
+---
+
+## About Me
+My name is *Ryan Bansal* and I am a rising *9th Grader*.
+
+[Kane's Free Data Science Bootcamp](https://bootcamp.davidkane.info)
